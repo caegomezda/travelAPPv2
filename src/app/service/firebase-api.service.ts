@@ -38,21 +38,59 @@ export class FirebaseApiService {
     await this.AddInstance(credentialUser,newForm,urlType);
   }
 
-  async getAccountData(){
+  async getCredential(){
     let credential = {
       uid:  await this.utilities.getIdUser(),
       token:  await this.utilities.getToken()
     }
-    let result  = await this.fetchUserInfo2Api(credential,1);
+    return credential
+  }
+
+  async getAccountData(){
+    let credential = this.getCredential()
+    let params = {}
+    let result  = await this.fetchUserInfo2Api(credential,1,params);
+    console.log('result',result);
+    if(result === null){
+      result  = await this.fetchUserInfo2Api(credential,2,params);
+    }
     let data = await this.getData(result);
     return data
   }
 
-  async fetchUserInfo2Api(credential,urlType){
+  async getDeliveryData(status){
+    let credential = this.getCredential()
+    let params = {}
+    if (status === 1) {
+      params = {
+        orderBy:"isPending",
+        equalTo:"true"
+      }
+    } else if( status === 2){
+      params = {
+        orderBy:"isTaken",
+        equalTo:"true"
+      }
+    }else if (status === 3){
+      params = {
+        orderBy:"isDone",
+        equalTo:"true"
+      }
+    }
+
+    let data  = await this.fetchUserInfo2Api(credential,4,params);
+    return data 
+  }
+
+  async fetchUserInfo2Api(credential,urlType,params){
     let url = await this.utilities.getUrlType(urlType);
     let uid = credential["uid"];
     let accessToken = credential["token"]
-    const apiUrl = `${url}/${uid}.json?auth=${accessToken}`;
+    let apiUrl = `${url}/${uid}.json?auth=${accessToken}`;
+    if (urlType === 4) {
+        apiUrl = `${url}/${uid}.json?orderBy=${params['orderBy']}&equalTo=${params['equalTo']}&auth=${accessToken}`;
+    }
+    console.log('apiUrl',apiUrl);
     let json = {}
     json = JSON.stringify(json);
     return  this.http.get(`${apiUrl}`, json).pipe(map( data => data)).toPromise();

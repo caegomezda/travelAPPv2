@@ -92,10 +92,7 @@ ionViewWillEnter(){
 
 async getUserData(){
   let result = await this.utilities.getDataUser();
-  console.log('result',result);
   this.userData = result
-  console.log('___________________________________');
-  console.log('this.userData',this.userData);
 }
 
 async init() {
@@ -167,8 +164,6 @@ addMarkers(marker: Marker) {
   });
 }
 
-
-
 setInfoWindow(marker: any, titulo: string, subtitulo: string) {
   const contentString = '<div id="contentInsideMap">'+
                         '<p style="font-weight: bold; margin-bottom: 5px;">'+ titulo + '</p>'
@@ -191,7 +186,6 @@ async myLocation() {
 }
 
 aceptar() {
-  console. log('click aceptar ->',this.positionSet);
   this.presentAlertConfirm()
 }
 
@@ -210,9 +204,6 @@ async presentAlertConfirm() {
         text: 'Aceptar',
         handler: async () => {
             await this.presentLoading();
-
-
-            // this.router.navigateByUrl('/data-driver', {replaceUrl: true});
           }
       }
     ]
@@ -227,11 +218,9 @@ async presentLoading() {
     message: 'Realizando pedido...',
     duration: 5000
   });
-
   let result  = await this.generateTaxiDelivery();
-  console.log('result',result);
-
   await loading.present();
+  this.router.navigateByUrl('/data-driver', {replaceUrl: true});
 }
 
 async generateTaxiDelivery(){

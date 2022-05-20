@@ -47,22 +47,17 @@ export class LoginPage implements OnInit {
   }
 
   async  signIn(){
-    if (this.credentialForm.value.email === "driver1@gmail.com") {
-        this.router.navigateByUrl('/driver', { replaceUrl: true });
-    }else{
       let newCredencialValue = {value:{email:this.credentialForm.value['email'],password:this.credentialForm.value['password']}}
       let emailUsu =this.credentialForm.value['email'];
       const loading = await this.loadingController.create();
       await loading.present();
-
       this.firebaseAuth.signIn(newCredencialValue.value).then( async res =>{
         if(this.firebaseAuth.isEmailVerified){      
           this.utilities.saveUsu(emailUsu);
-          loading.dismiss();
           await this.utilities.saveIdUser(res.user.uid);
           await this.utilities.saveTokenUser(res.user.getIdToken());
+          loading.dismiss();
           await this.loadDataFromApi();
-          this.router.navigateByUrl('/menu-principal', {replaceUrl: true});
         }else{
           loading.dismiss();
           this.isNotVerified();
@@ -77,12 +72,11 @@ export class LoginPage implements OnInit {
         console.log("err",err)
         await alert.present();
       })
-      await this.loadDataFromApi();
-    }
   }
   
   async loadDataFromApi(){
     await this.firebaseApi.getAccountData();
+    this.userSelector();
   }
 
   get email(){
@@ -91,6 +85,17 @@ export class LoginPage implements OnInit {
 
   get password(){
     return this.credentialForm.get('password');
+  }
+
+  async userSelector(){
+    let userData = await this.utilities.getDataUser();
+    if(userData['userType'] === "driver"){
+      this.router.navigateByUrl('/driver', { replaceUrl: true });
+    }else if(userData['userType'] === "user"){
+      this.router.navigateByUrl('/menu-principal', {replaceUrl: true});
+    }else{
+      console.log(" ",userData);
+    }
   }
 
   async isNotVerified(){
