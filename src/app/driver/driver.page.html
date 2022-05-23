@@ -10,28 +10,11 @@
   </div>
 
   <form id="form">
-    <ion-list>
-
-      <ion-item (click)="presentarAlerta()" >
+    <ion-list *ngIf="isDeliveryDataLoad">
+      <ion-item *ngFor="let deliveries of deliveryData" (click)="presentarAlerta()" >
         <ion-icon slot="start" name="person-circle-outline"></ion-icon>
-        <ion-label class="ion-text-wrap">Camilo Gomez <br> <h2>Calle 60 #45 b-21 </h2></ion-label>
+        <ion-label class="ion-text-wrap"><h2>{{deliveries.positionSetString}}</h2></ion-label>
       </ion-item>
-
-      <ion-item>
-        <ion-icon slot="start" name="person-circle-outline"></ion-icon>
-        <ion-label class="ion-text-wrap">Laura Tello <br> <h2>Calle 30 #12-07 </h2></ion-label>
-      </ion-item>
-
-      <ion-item>
-        <ion-icon slot="start" name="person-circle-outline"></ion-icon>
-        <ion-label class="ion-text-wrap">Sebastian Arevalo <br> <h2>Calle 32 #17 a-35 </h2></ion-label>
-      </ion-item>
-
-      <ion-item>
-        <ion-icon slot="start" name="person-circle-outline"></ion-icon>
-        <ion-label class="ion-text-wrap">Santiago Barrero <br> <h2>Calle 25a #46-41 </h2></ion-label>
-      </ion-item>
-      
     </ion-list>
     <app-button routerLink="/home" texto="Finalizar jornada"></app-button>
   </form>  

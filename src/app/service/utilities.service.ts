@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { LoginPage } from '../login/login.page';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,8 @@ export class UtilitiesService {
   correoUsuario:any;
   dataUser:any;
   userCredential:any;
+  dataDelivery:any;
+
   d = new Date();
   private userURL = environment.urlConfing.USERURL;
   private driverURL = environment.urlConfing.DRIVERTURL;
@@ -56,9 +59,15 @@ export class UtilitiesService {
   }
 
   async saveDataUser(data){
-    console.log('_______________________________________________________________________');
-    console.log('data',data);
     this.dataUser = await data;
+  }
+
+  async getDataDelivery(){
+    return await this.dataDelivery;
+  }
+
+  async saveDataDelivery(data){
+    this.dataDelivery = await data;
   }
 
   getUrlType(urlType){
@@ -68,6 +77,8 @@ export class UtilitiesService {
       case 2:
         return this.driverURL;
       case 3:
+        return this.movementURL;
+      case 4:
         return this.movementURL;
       default:
         break;

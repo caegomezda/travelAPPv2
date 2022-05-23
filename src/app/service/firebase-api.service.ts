@@ -16,7 +16,6 @@ export class FirebaseApiService {
 
   async AddInstance(credential,form,urlType){
     let apiUrl = "";
-    console.log('AddInstance');
     let uid = credential['uid'];
     let url = await this.utilities.getUrlType(urlType)
     let accessToken = await credential['token'];
@@ -24,7 +23,6 @@ export class FirebaseApiService {
     if (urlType === 3) {
       apiUrl = `${url}/movements.json?auth=${accessToken}`;
     }
-    console.log('apiUrl',apiUrl);
     let json = form
     json = JSON.stringify(json);
     return await this.http.post(`${apiUrl}`, json, this.httpOptions).pipe(map( data => data)).toPromise();
@@ -47,19 +45,18 @@ export class FirebaseApiService {
   }
 
   async getAccountData(){
-    let credential = this.getCredential()
+    let credential = await this.getCredential()
     let params = {}
     let result  = await this.fetchUserInfo2Api(credential,1,params);
-    console.log('result',result);
     if(result === null){
       result  = await this.fetchUserInfo2Api(credential,2,params);
     }
-    let data = await this.getData(result);
+    let data = await this.getData(result,1);
     return data
   }
 
   async getDeliveryData(status){
-    let credential = this.getCredential()
+    let credential = await this.getCredential()
     let params = {}
     if (status === 1) {
       params = {
@@ -78,30 +75,36 @@ export class FirebaseApiService {
       }
     }
 
-    let data  = await this.fetchUserInfo2Api(credential,4,params);
-    return data 
+    let result  = await this.fetchUserInfo2Api(credential,4,params);
+    await this.getData(result,2);
   }
 
   async fetchUserInfo2Api(credential,urlType,params){
     let url = await this.utilities.getUrlType(urlType);
     let uid = credential["uid"];
-    let accessToken = credential["token"]
+    let accessToken = credential["token"];
     let apiUrl = `${url}/${uid}.json?auth=${accessToken}`;
     if (urlType === 4) {
-        apiUrl = `${url}/${uid}.json?orderBy=${params['orderBy']}&equalTo=${params['equalTo']}&auth=${accessToken}`;
+        apiUrl = `${url}/movements.json?orderBy="${params['orderBy']}"&equalTo=${params['equalTo']}&auth=${accessToken}`;
     }
-    console.log('apiUrl',apiUrl);
     let json = {}
     json = JSON.stringify(json);
     return  this.http.get(`${apiUrl}`, json).pipe(map( data => data)).toPromise();
   }
 
-  async getData(dataJson){
+  async getData(dataJson,type){
     let data = [];
-    for (let key in dataJson) {
-      data = dataJson[key] 
-    }
+    if (type == 1) {
+      for (let key in dataJson) {
+        data = dataJson[key]
+      }
     this.utilities.saveDataUser(data);
+    }else if (type === 2){
+      for (let key in dataJson) {
+        data.push(dataJson[key])
+      }
+    this.utilities.saveDataDelivery(data);
+    }
   }
 
   async taxiDelivery(userData,positionSet,positionSetString){
@@ -124,3 +127,5 @@ export class FirebaseApiService {
   }
 
 }
+
+
