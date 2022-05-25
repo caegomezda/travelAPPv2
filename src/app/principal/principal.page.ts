@@ -10,7 +10,8 @@ import { UtilitiesService } from '../service/utilities.service';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { FirebaseApiService } from '../service/firebase-api.service';
-
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Observable } from 'rxjs';
 // const {Geolocation} = Plugins;
 // declare var google: any;
 
@@ -23,6 +24,7 @@ interface Marker {
     lng: number,
   };
 }
+
 
 
 @Component({
@@ -64,6 +66,7 @@ export class PrincipalPage implements OnInit {
   positionSet: any;
   userData: any;
   positionSetString:String = "ESTA ES LA DIRECCION";
+  userDataDelivery: Observable<any>;
   // public search:string='';
   @ViewChild('map') divMap: ElementRef;
 
@@ -76,8 +79,9 @@ constructor(private renderer:Renderer2,
             private loandingCtrl: LoadingController,
             private router: Router,
             private firebaseApi:FirebaseApiService,
-
+            private firestore: AngularFirestore
             ) {
+
 }
 
 ngOnInit(): void {
@@ -216,11 +220,14 @@ async presentLoading() {
   const loading = await this.loandingCtrl.create({
     cssClass: 'my-custom-class',
     message: 'Realizando pedido...',
-    duration: 5000
+    // duration: 5000
   });
-  let result  = await this.generateTaxiDelivery();
   await loading.present();
-  this.router.navigateByUrl('/data-driver', {replaceUrl: true});
+  await this.generateTaxiDelivery();
+  console.log('userData',this.userData);
+  this.userDataDelivery = this.firestore.collection('movement',ref => ref.where('isPending', '==', false).where('isTaken', '==', true)).doc(this.userData['uid']).valueChanges();
+  console.log('this.userDataDelivery',this.userDataDelivery);
+  // this.router.navigateByUrl('/data-driver', {replaceUrl: true});
 }
 
 async generateTaxiDelivery(){

@@ -2,6 +2,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UtilitiesService } from './utilities.service';
 import {map} from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,6 +14,7 @@ export class FirebaseApiService {
   constructor(
     private utilities : UtilitiesService,
     private http:HttpClient,
+    private afs: AngularFirestore,
 
   ) { }
 
@@ -108,6 +112,7 @@ export class FirebaseApiService {
   }
 
   async taxiDelivery(userData,positionSet,positionSetString){
+
     let creationTime = await this.utilities.fechaHoyInv(0);
     let credential = {
       uid:userData['uid'],
@@ -123,7 +128,20 @@ export class FirebaseApiService {
       positionSet:positionSet,
       positionSetString:positionSetString
     }
-    await this.AddInstance(credential,newForm,3);
+    console.log('newForm',newForm);
+    return await this.afs.doc(
+      `movement/${credential['uid']}`
+      ).set({
+        creationDate:creationTime[1],
+        uiserId:credential['uid'],
+        isActive:true,
+        isPending:true,
+        istaken:false,
+        isDone:false,
+        // positionSet:positionSet,
+        positionSet:"camilo estuvo aquii",
+        positionSetString:positionSetString
+      });
   }
 
 }

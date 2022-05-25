@@ -3,6 +3,8 @@ import { FirebaseApiService } from '../service/firebase-api.service';
 import { UtilitiesService } from '../service/utilities.service';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-driver',
@@ -11,14 +13,21 @@ import { Router } from '@angular/router';
 })
 export class DriverPage implements OnInit {
   userData:any;
-  deliveryData:any;
+  deliveryData:Observable<any[]>;
   isDeliveryDataLoad: Boolean = false;
+  movements: Observable<any[]>;
+  filteredItems: Observable<any[]>;
   constructor(
     private utilities : UtilitiesService,
     private firebaseApi:FirebaseApiService,
     private alertController : AlertController,
-    private router : Router
-    ) { }
+    private router : Router,
+    private firestore: AngularFirestore
+    ) {
+      this.deliveryData = this.firestore.collection('movement',ref => ref.where('isPending', '==', true)).valueChanges()
+      // this.deliveryData = this.firestore.collection('movement').
+      // afs.collection('items', ref => ref.where('size', '==', 'large'))
+    }
 
   ngOnInit() {
   }
@@ -29,9 +38,7 @@ export class DriverPage implements OnInit {
 
   async getDeliveryData(){
     let result = await this.utilities.getDataDelivery();
-    console.log('result',result);
     this.deliveryData = result
-    console.log('this.deliveryData',this.deliveryData);
     this.isDeliveryDataLoad = true
   }
   
@@ -39,14 +46,15 @@ export class DriverPage implements OnInit {
     let result = await this.utilities.getDataUser();
     this.userData = result
     await this.firebaseApi.getDeliveryData(1);
-    await this.getDeliveryData();
+    this.isDeliveryDataLoad = true
   }
 
-  presentarAlerta(){
-    this.presentAlertConfirm();
+  presentarAlerta(deliveries){
+    console.log('deliveries',deliveries);
+    this.presentAlertConfirm(deliveries['uiserId']);
   }
 
-  async presentAlertConfirm() {
+  async presentAlertConfirm(uid) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       backdropDismiss: false,
@@ -67,6 +75,7 @@ export class DriverPage implements OnInit {
           text: 'Aceptar',
           id: 'confirm-button',
           handler: () => {
+            this.updateMovement(uid);
             this.router.navigateByUrl('/driver-map', { replaceUrl: true });
           }
         }
@@ -75,4 +84,9 @@ export class DriverPage implements OnInit {
 
     await alert.present();
   }
+
+  async updateMovement(uid){
+    await this.firestore.collection(`movement`).doc(uid).ref.update({"isPending":false,"isTaken":true})
+  }
 }
+
