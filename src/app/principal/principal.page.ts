@@ -228,6 +228,8 @@ async presentLoading() {
   this.userDataDelivery = this.firestore.collection('movement',ref => ref.where('isPending', '==', false).where('isTaken', '==', true)).doc(this.userData['uid']).valueChanges();
   console.log('this.userDataDelivery',this.userDataDelivery);
   // this.router.navigateByUrl('/data-driver', {replaceUrl: true});
+  // this.comments$ = afs.collectionGroup('Comments', ref => ref.where('user', '==', userId))
+  // .valueChanges({ idField: 'docId' });
 }
 
 async generateTaxiDelivery(){
