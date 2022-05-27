@@ -1,9 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, ElementRef, Inject, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
-
-
 // import { Plugins } from '@capacitor/core';
-
 import { Geolocation } from '@capacitor/geolocation';
 import { GoogleMapsService } from '../service/google-maps.service';
 import { UtilitiesService } from '../service/utilities.service';
@@ -24,8 +21,6 @@ interface Marker {
     lng: number,
   };
 }
-
-
 
 @Component({
   selector: 'app-principal',
@@ -50,7 +45,6 @@ export class PrincipalPage implements OnInit {
     }
   ];
   
-
   @Input () position = {
     lat: 5.0507972,
     lng: -75.4927164
@@ -60,6 +54,7 @@ export class PrincipalPage implements OnInit {
     titulo: 'Mi ubicación',
     subtitulo: 'Mi ubicación '
   }
+
   map: any;
   marker: any;
   infowindow: any;
@@ -67,24 +62,26 @@ export class PrincipalPage implements OnInit {
   userData: any;
   positionSetString:String = "ESTA ES LA DIRECCION";
   userDataDelivery: Observable<any>;
+  isDeliveryDataLoad:Boolean = false;
   // public search:string='';
   @ViewChild('map') divMap: ElementRef;
 
-
-constructor(private renderer:Renderer2,
-            @Inject(DOCUMENT) private document,
-            private googlemapsService: GoogleMapsService,
-            private alertController : AlertController,
-            private utilities : UtilitiesService,
-            private loandingCtrl: LoadingController,
-            private router: Router,
-            private firebaseApi:FirebaseApiService,
-            private firestore: AngularFirestore
-            ) {
-
+  constructor(private renderer:Renderer2,
+    private googlemapsService: GoogleMapsService,
+    private alertController : AlertController,
+    private utilities : UtilitiesService,
+    private loandingCtrl: LoadingController,
+    private router: Router,
+    private firebaseApi:FirebaseApiService,
+    private firestore: AngularFirestore,
+    @Inject(DOCUMENT) private document)
+{
+  this.userDataDelivery =  this.firestore.collection('movement',ref => ref.where('isTaken', '==', true).where('isPending', '==', false)).valueChanges();
+  
 }
 
 ngOnInit(): void {
+  this.getUserData();
   this.init();
   this.myLocation();
   Geolocation.requestPermissions();
@@ -225,11 +222,22 @@ async presentLoading() {
   await loading.present();
   await this.generateTaxiDelivery();
   console.log('userData',this.userData);
-  this.userDataDelivery = this.firestore.collection('movement',ref => ref.where('isPending', '==', false).where('isTaken', '==', true)).doc(this.userData['uid']).valueChanges();
-  console.log('this.userDataDelivery',this.userDataDelivery);
+  // this.userDataDelivery = await this.firestore.collection('movement',ref => ref.where('isTaken', '==', true)).valueChanges();
+  try {
+    this.userDataDelivery.forEach(element => {
+      console.log('element',element);
+    });
+  } catch (error) {
+    console.log('error',error);
+  }
+
+  // console.log('this.userDataDelivery',this.userDataDelivery);
   // this.router.navigateByUrl('/data-driver', {replaceUrl: true});
   // this.comments$ = afs.collectionGroup('Comments', ref => ref.where('user', '==', userId))
   // .valueChanges({ idField: 'docId' });
+  this.isDeliveryDataLoad = true;
+  await loading.dismiss();
+
 }
 
 async generateTaxiDelivery(){

@@ -10,7 +10,7 @@
 
 <ion-content>
   
-  <div #map class="map">
+  <!-- <div #map class="map">
       
   </div> 
 
@@ -19,10 +19,20 @@
     
     <ion-button id="miubicacion" class="regular" expand="block" shape="round" fill="outline" (click)="myLocation()" >Mi ubicación actual
       <ion-icon class="icono" name="locate"></ion-icon>
-    </ion-button>
+    </ion-button> -->
+
+ 
 
     <app-button  (click)="aceptar()" texto="Realizar pedido" class="aceptar"></app-button>
     
+  <!-- </div> -->
+  <div>
+    <ion-list *ngIf="isDeliveryDataLoad">
+      <ion-item *ngFor="let user of userDataDelivery | async">
+        <ion-icon slot="start" name="person-circle-outline"></ion-icon>
+        <ion-label class="ion-text-wrap"><h2>{{user.positionSetString}}</h2></ion-label>
+      </ion-item>
+    </ion-list>
   </div>
   
 </ion-content>
