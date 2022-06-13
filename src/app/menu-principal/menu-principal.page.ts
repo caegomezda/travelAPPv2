@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
+import { SesionService } from '../service/sesion.service';
 import { UtilitiesService } from '../service/utilities.service';
 
 @Component({
@@ -11,8 +12,14 @@ export class MenuPrincipalPage implements OnInit {
 subjects;
   constructor(
     private router: Router,
-    private utilities : UtilitiesService) { }
+    private utilities : UtilitiesService,
+    private sesion:SesionService,
+    ) { }
 
+  ionViewWillEnter(){
+    this.sesion.sesionCaller()
+  }
+  
   ngOnInit() {
     this.subjects=[
       {

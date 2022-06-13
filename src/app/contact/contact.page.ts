@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SesionService } from '../service/sesion.service';
 
 @Component({
   selector: 'app-contact',
@@ -7,8 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactPage implements OnInit {
 
-  constructor() { }
+  constructor(private sesion : SesionService ) { }
 
+  ionViewWillEnter(){
+    this.sesion.sesionCaller()
+  }
+  
   ngOnInit() {
   }
 

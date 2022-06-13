@@ -14,12 +14,13 @@ ion-content {
         height: 40px;
         width: 40px;
     }
+
     ion-label{
         display: block;
         color: #fd512d;
         text-align: center;
     }
-    
+
     .user-div{
         padding: 20px;
         width: 100%;
@@ -33,9 +34,7 @@ ion-content {
             width:340px;
             height:118px;
             margin-top: 15px;
-            
         }
-        
     }
     .content-div{
         background: linear-gradient(to right,#fd512d 0%, #fd6242 100%);
@@ -63,6 +62,7 @@ ion-content {
             padding-left: 5px;
             margin-top: 10px;
         }
+        
         .date{
             color: #fd512d;
             font-weight: 500;

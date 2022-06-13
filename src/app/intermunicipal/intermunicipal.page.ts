@@ -1,11 +1,11 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, ElementRef, Inject, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 
-
 // import { Plugins } from '@capacitor/core';
 
 import { Geolocation } from '@capacitor/geolocation';
 import { GoogleMapsService } from '../service/google-maps.service';
+import { SesionService } from '../service/sesion.service';
 
 // const {Geolocation} = Plugins;
 declare var google: any;
@@ -35,17 +35,22 @@ export class IntermunicipalPage implements OnInit {
   @ViewChild('map') divMap: ElementRef;
 
 
-constructor(private renderer:Renderer2,
-            @Inject(DOCUMENT) private document,
+constructor(private renderer: Renderer2,
             private googlemapsService: GoogleMapsService,
+            private sesion: SesionService,
+            @Inject(DOCUMENT) private document,
             ) {
 }
 
+ionViewWillEnter(){
+  this.sesion.sesionCaller()
+}
 
 ngOnInit(): void {
   this.init();
   this.myLocation();
 }
+
 async init() {
   this.googlemapsService.init(this.renderer, this.document). then( () =>{
           this.initMap();
@@ -97,8 +102,6 @@ addMarker(position: any): void {
  
 }
 
-
-
 setInfoWindow(marker: any, titulo: string, subtitulo: string) {
   const contentString = '<div id="contentInsideMap">'+
                         '<p style="font-weight: bold; margin-bottom: 5px;">'+ titulo + '</p>'
@@ -129,8 +132,6 @@ aceptar() {
   console. log('click aceptar ->',this.positionSet);
 
 }
-
-
 
   // integracion temporal del mapa- se cambio a geolocation
   // loadMap() {

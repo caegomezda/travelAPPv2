@@ -128,7 +128,7 @@ export class FirebaseApiService {
       positionSet:positionSet,
       positionSetString:positionSetString
     }
-    console.log('newForm',newForm);
+    // console.log('newForm',newForm);
     return await this.afs.doc(
       `movement/${credential['uid']}`
       ).set({

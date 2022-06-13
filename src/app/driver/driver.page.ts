@@ -5,6 +5,7 @@ import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
+import { SesionService } from '../service/sesion.service';
 
 @Component({
   selector: 'app-driver',
@@ -17,22 +18,22 @@ export class DriverPage implements OnInit {
   isDeliveryDataLoad: Boolean = false;
   movements: Observable<any[]>;
   filteredItems: Observable<any[]>;
-  constructor(
-    private utilities : UtilitiesService,
-    private firebaseApi:FirebaseApiService,
-    private alertController : AlertController,
-    private router : Router,
-    private firestore: AngularFirestore
+  
+  constructor(private utilities : UtilitiesService,
+              private firebaseApi:FirebaseApiService,
+              private alertController : AlertController,
+              private router : Router,
+              private firestore: AngularFirestore,
+              private sesion: SesionService,
     ) {
       this.deliveryData = this.firestore.collection('movement',ref => ref.where('isPending', '==', true)).valueChanges()
-      // this.deliveryData = this.firestore.collection('movement').
-      // afs.collection('items', ref => ref.where('size', '==', 'large'))
     }
 
   ngOnInit() {
   }
 
   ionViewWillEnter(){
+    this.sesion.sesionCaller()
     this.getUserData();
   }
 
@@ -50,7 +51,6 @@ export class DriverPage implements OnInit {
   }
 
   presentarAlerta(deliveries){
-    console.log('deliveries',deliveries);
     this.presentAlertConfirm(deliveries['uiserId']);
   }
 
@@ -58,9 +58,11 @@ export class DriverPage implements OnInit {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       backdropDismiss: false,
+
       header: 'Camilo Gomez',
       mode: 'ios',
       message: '<ion-icon name="location"></ion-icon><strong>Calle 60 #45 b-21</strong>',
+      //mensaje quemado, modificar con datos usuario
       buttons: [
         {
           text: 'Rechazar',

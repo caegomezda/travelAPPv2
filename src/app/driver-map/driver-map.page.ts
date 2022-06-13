@@ -4,6 +4,7 @@ import { Component, ElementRef, Inject, Input, OnInit, Renderer2, ViewChild } fr
 import { Geolocation } from '@capacitor/geolocation';
 import { GoogleMapsService } from '../service/google-maps.service';
 import { AlertController } from '@ionic/angular';
+import { SesionService } from '../service/sesion.service';
 
 declare var google;
 
@@ -33,9 +34,10 @@ export class DriverMapPage implements OnInit {
 
 
 constructor(private renderer:Renderer2,
-            @Inject(DOCUMENT) private document,
             private googlemapsService: GoogleMapsService,
             private alertController : AlertController,
+            private sesion: SesionService,
+            @Inject(DOCUMENT) private document,
             ) {
 }
 
@@ -49,6 +51,7 @@ ngOnInit(): void {
 ionViewWillEnter(){
   this.isAcept = false;
   this.isAceptCod = false;
+  this.sesion.sesionCaller()
 }
 
 async init() {

@@ -16,9 +16,9 @@ import { ButtonModule } from '../components/button/button.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    ContactPageRoutingModule,
     InputModule,
     ButtonModule,
+    ContactPageRoutingModule,
   ],
   declarations: [ContactPage]
 })

@@ -9,7 +9,15 @@
 </ion-header>
 
 <ion-content>
-  
+  <div>
+    <ion-list *ngIf="isDeliveryDataLoad">
+      <ion-item *ngFor="let user of userDataDelivery | async" (globalZoneAwareCallback)="onChangeUser(user)">
+        <!-- <ion-icon slot="start" name="person-circle-outline"></ion-icon> -->
+        <ion-label  class="ion-text-wrap"><h2>{{user.positionSet}}</h2></ion-label>
+        <ion-label  class="ion-text-wrap"><h2>{{user.isTaken}}</h2></ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
   <!-- <div #map class="map">
       
   </div> 
@@ -26,14 +34,7 @@
     <app-button  (click)="aceptar()" texto="Realizar pedido" class="aceptar"></app-button>
     
   <!-- </div> -->
-  <div>
-    <ion-list *ngIf="isDeliveryDataLoad">
-      <ion-item *ngFor="let user of userDataDelivery | async">
-        <ion-icon slot="start" name="person-circle-outline"></ion-icon>
-        <ion-label class="ion-text-wrap"><h2>{{user.positionSetString}}</h2></ion-label>
-      </ion-item>
-    </ion-list>
-  </div>
+
   
 </ion-content>
 

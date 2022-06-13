@@ -9,9 +9,12 @@ import { Router } from '@angular/router';
 import { FirebaseApiService } from '../service/firebase-api.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
+import { SesionService } from '../service/sesion.service';
 // const {Geolocation} = Plugins;
 // declare var google: any;
-
+// import { doc, onSnapshot } from "firebase/firestore";
+// import { User } from '../aInterfaces/fire-base-interface';
+// import { doc, onSnapshot } from "firebase/firestore";
 declare var google;
 
 // interface para los marcadores externos
@@ -74,10 +77,11 @@ export class PrincipalPage implements OnInit {
     private router: Router,
     private firebaseApi:FirebaseApiService,
     private firestore: AngularFirestore,
+    private sesion: SesionService,
     @Inject(DOCUMENT) private document)
 {
-  this.userDataDelivery =  this.firestore.collection('movement',ref => ref.where('isTaken', '==', true).where('isPending', '==', false)).valueChanges();
-  
+  // let result = async () => await this.userData
+  // console.log('result',result);
 }
 
 ngOnInit(): void {
@@ -88,7 +92,10 @@ ngOnInit(): void {
 }
 
 ionViewWillEnter(){
+  this.sesion.sesionCaller()
   this.getUserData();
+  // console.log('this.userData',this.userData.uid);
+  this.userDataDelivery =  this.firestore.collection('movement',ref => ref.where('uiserId', '==', this.userData.uid)).valueChanges();
 }
 
 async getUserData(){
@@ -221,23 +228,29 @@ async presentLoading() {
   });
   await loading.present();
   await this.generateTaxiDelivery();
-  console.log('userData',this.userData);
+  // console.log('userData',this.userData);
   // this.userDataDelivery = await this.firestore.collection('movement',ref => ref.where('isTaken', '==', true)).valueChanges();
-  try {
-    this.userDataDelivery.forEach(element => {
-      console.log('element',element);
-    });
-  } catch (error) {
-    console.log('error',error);
-  }
-
+  // try {
+  //   this.userDataDelivery.forEach(element => {
+  //     console.log('element',element);
+  //   });
+  // } catch (error) {
+  //   console.log('error',error);
+  // }
+  // console.log('this.userDataDelivery',this.userDataDelivery);
   // console.log('this.userDataDelivery',this.userDataDelivery);
   // this.router.navigateByUrl('/data-driver', {replaceUrl: true});
   // this.comments$ = afs.collectionGroup('Comments', ref => ref.where('user', '==', userId))
   // .valueChanges({ idField: 'docId' });
   this.isDeliveryDataLoad = true;
   await loading.dismiss();
+}
 
+async onChangeUser(user){
+  console.log('onChange');
+  console.log('user',await user);
+
+  // console.log('data',await data);
 }
 
 async generateTaxiDelivery(){
@@ -246,3 +259,4 @@ async generateTaxiDelivery(){
 
 
 }
+

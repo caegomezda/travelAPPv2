@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SesionService } from '../service/sesion.service';
 import { UtilitiesService } from '../service/utilities.service';
 
 @Component({
@@ -8,12 +9,16 @@ import { UtilitiesService } from '../service/utilities.service';
 })
 export class ProfilePage implements OnInit {
   userData : any;
-  constructor(private utilities : UtilitiesService) { }
   edit: boolean = false;
+  constructor(private utilities : UtilitiesService,
+              private sesion: SesionService,
+              ) { }
+  
   ngOnInit() {
   }
 
   ionViewWillEnter(){
+    this.sesion.sesionCaller()
     this.userData = this.utilities.getDataUser();
     console.log('this.userData',this.userData);
   }

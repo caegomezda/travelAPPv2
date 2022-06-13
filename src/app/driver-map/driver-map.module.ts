@@ -16,8 +16,8 @@ import { InputModule } from '../components/input/input.module';
     FormsModule,
     IonicModule,
     ButtonModule,
-    DriverMapPageRoutingModule,
     InputModule,
+    DriverMapPageRoutingModule,
   ],
   declarations: [DriverMapPage]
 })

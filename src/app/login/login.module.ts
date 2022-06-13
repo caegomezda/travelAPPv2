@@ -15,11 +15,11 @@ import { ButtonModule } from '../components/button/button.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    LoginPageRoutingModule,
     IonicModule,
     InputModule,
     ButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LoginPageRoutingModule,
   ],
   declarations: [LoginPage]
 })
