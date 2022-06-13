@@ -5,6 +5,7 @@ import { AlertController, LoadingController } from '@ionic/angular';
 import { UtilitiesService } from '../service/utilities.service';
 import { FirebaseAuthService } from '../service/firebase-auth.service';
 import { FirebaseApiService } from '../service/firebase-api.service';
+import { Storage } from '@capacitor/storage';
 
 @Component({
   selector: 'app-login',
@@ -47,15 +48,25 @@ export class LoginPage implements OnInit {
   }
 
   async  signIn(){
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Autenticando...',
+      duration: 2000
+    });
       let newCredencialValue = {value:{email:this.credentialForm.value['email'],password:this.credentialForm.value['password']}}
-      let emailUsu =this.credentialForm.value['email'];
-      const loading = await this.loadingController.create();
+      let emailUsu = this.credentialForm.value['email'];
+      let passUsu = this.credentialForm.value['password']
+      // const loading = await this.loadingController.create();
       await loading.present();
       this.firebaseAuth.signIn(newCredencialValue.value).then( async res =>{
         if(this.firebaseAuth.isEmailVerified){      
           this.utilities.saveUsu(emailUsu);
           await this.utilities.saveIdUser(res.user.uid);
           await this.utilities.saveTokenUser(res.user.getIdToken());
+
+          await this.setString("usuario", emailUsu);
+          await this.setString("password",passUsu);
+      
           loading.dismiss();
           await this.loadDataFromApi();
         }else{
@@ -73,7 +84,7 @@ export class LoginPage implements OnInit {
         await alert.present();
       })
   }
-  
+
   async loadDataFromApi(){
     await this.firebaseApi.getAccountData();
     this.userSelector();
@@ -116,4 +127,73 @@ export class LoginPage implements OnInit {
     }
   }
 
+  async estadoSesion(){
+    let estadoUsuario
+    await this.getString("usuario").then((data: any) => {
+      if (data.value) {
+        estadoUsuario = data.value;
+      }
+    });;
+    let estadoPassword;
+    await this.getString("password").then((data: any) => {
+      if (data.value) {
+        estadoPassword = data.value;
+      }
+    });;
+    if(estadoUsuario!=undefined && estadoPassword!=undefined && estadoUsuario!="" && estadoPassword!=""){
+      this.signIn2(estadoUsuario,estadoPassword);
+    }
+  }
+
+  async setString(key: string, value: string) {
+    await Storage.set({ key, value });
+  } 
+
+  async getString(key: string): Promise<{ value: any }> {
+    return (await Storage.get({ key }));
+  }
+
+  async signIn2(email,password){
+    console.log('email',email);
+    console.log('password',password);
+
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Autenticando...',
+      duration: 2000
+    });
+
+    await loading.present();
+    let newForm = {
+        email : email,
+        password : password
+    }
+    let emailUsu = newForm['email'];
+    this.firebaseAuth.signIn(newForm).then( async res =>{
+      if(this.firebaseAuth.isEmailVerified){      
+        this.utilities.saveUsu(emailUsu);
+        await this.utilities.saveIdUser(res.user.uid);
+        await this.utilities.saveTokenUser(res.user.getIdToken());
+        loading.dismiss();
+        await this.loadDataFromApi();
+      }else{
+        loading.dismiss();
+        this.isNotVerified();
+      }
+    }, async err =>{
+      loading.dismiss();
+      const alert = await this.alertController.create({
+        header: ':(',
+        message:'Correo o contraseña invalida, revisa e intentalo de nuevo',
+        buttons: ['OK'],
+      });
+      console.log("err",err)
+      await alert.present();
+    })
+  }
 }
+
+// function emailUsu(emailUsu: any) {
+//   throw new Error('Function not implemented.');
+// }
+
