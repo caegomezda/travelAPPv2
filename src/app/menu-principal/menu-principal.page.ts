@@ -40,7 +40,7 @@ subjects;
       {
         icon: 'assets/icon/help-outline.svg',
         name: 'Ayuda',
-        id: '/contac'
+        id: '/contact'
       },
     ];
   }

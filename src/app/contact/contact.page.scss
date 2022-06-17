@@ -70,3 +70,24 @@ ion-content{
     --highlight-height: 0px;
     background-color: rgba(253, 81, 45, 0.38);
 }
+
+ion-item{
+    border-radius: 18px;
+    height:44px;
+    box-shadow: 1px 8px 8px 0px rgba(0,0,0,0.08);
+    --highlight-height: 0px;
+    background-color: rgba(253, 81, 45, 0.38);
+    
+    ion-input{
+        font-size:18px;
+        --padding-top:14px;
+        --padding-bottom:14px;
+        --padding-start:5px;
+    }
+    a{
+        font-size:17px;
+        letter-spacing: 0.5px;
+        text-decoration: none;
+    }
+    
+}

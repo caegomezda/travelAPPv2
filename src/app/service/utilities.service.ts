@@ -19,6 +19,8 @@ export class UtilitiesService {
   private userURL = environment.urlConfing.USERURL;
   private driverURL = environment.urlConfing.DRIVERTURL;
   private movementURL = environment.urlConfing.MOVEMENTURL;
+  private pqrsURL = environment.urlConfing.PQRSURL;
+
   constructor() { }
 
   // saveUserCredential(userCredential){
@@ -80,6 +82,8 @@ export class UtilitiesService {
         return this.movementURL;
       case 4:
         return this.movementURL;
+      case 5:
+        return this.pqrsURL;
       default:
         break;
     }

@@ -27,19 +27,35 @@
       </ion-col>
     </ion-row>
   </div>
+  <div class="form">
+    <div [formGroup]="credentialForm">
+      <ion-item color="ion-color-secondary-rgb" class="ion-margin-bottom" lines="none">
+        <ion-input 
+          type="text"
+          placeholder="{{'Titulo'}}"
+          formControlName="vrtitle"
+          autofocus="true"
+          clearInput="true"
+          required>
+        </ion-input>
+      </ion-item>
 
-  <form id="form">
-    <h3 class="regular">
-      Si necesitas solicitar ayuda contactanos al siguiente correo de soporte:<br>
-    </h3>
-    <!-- <h2 class="regular">
-      soporteTravelApp@gmail.com
-    </h2> -->
-    <app-input placeholder="Titulo"></app-input>
-    <!-- <app-input  placeholder="Descripcción"></app-input> -->
-    <ion-textarea color="ion-color-secondary-rgb" class="ion-margin-bottom" class="ion-text-area" rows="6" cols="20" placeholder="  Descripcción..."></ion-textarea>
-    
-    <app-button texto="Enviar correo"></app-button>
-  </form>
+      <ion-textarea  
+        formControlName="description" 
+        name="description" 
+        color="ion-color-secondary-rgb" 
+        class="ion-margin-bottom" 
+        class="ion-text-area" 
+        rows="6" 
+        cols="20" 
+        placeholder="  Descripcción..."
+        autofocus="true"
+        clearInput="true"
+        required></ion-textarea>
+      
+        <app-button  (click)="sendPQRS()" texto="Iniciar sesión"></app-button>
+    </div>
+
+  </div>
 </ion-content>
 

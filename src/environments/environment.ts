@@ -17,6 +17,7 @@ export const environment = {
     USERURL: `${URL}user-api`,
     DRIVERTURL: `${URL}driver-api`,
     MOVEMENTURL: `${URL}movement-api`,
+    PQRSURL: `${URL}pqrs-api`,
   }
 };
 /*

@@ -21,11 +21,18 @@ export class FirebaseApiService {
   async AddInstance(credential,form,urlType){
     let apiUrl = "";
     let uid = credential['uid'];
+    console.log('uid',uid);
     let url = await this.utilities.getUrlType(urlType)
+    console.log('url',url);
     let accessToken = await credential['token'];
+    console.log('accessToken',accessToken);
     apiUrl = `${url}/${uid}.json?auth=${accessToken}`;
     if (urlType === 3) {
+      console.log('url',url);
       apiUrl = `${url}/movements.json?auth=${accessToken}`;
+    }
+    if(urlType === 5){
+      apiUrl = `${url}.json?auth=${accessToken}`;
     }
     let json = form
     json = JSON.stringify(json);
@@ -38,6 +45,17 @@ export class FirebaseApiService {
       token:await credential.user._delegate.accessToken
     }
     await this.AddInstance(credentialUser,newForm,urlType);
+  }
+
+  async addPQRS(credential,newForm,urlType){
+    // let credentialUser = {
+    //   uid:credential.user.uid,
+    //   token:await credential.user._delegate.accessToken
+    // }
+    console.log('credential',credential);
+    console.log('newForm',newForm);
+    console.log('urlType',urlType);
+    await this.AddInstance(credential,newForm,urlType);
   }
 
   async getCredential(){
