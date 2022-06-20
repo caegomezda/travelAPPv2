@@ -1,7 +1,7 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
    <ion-buttons slot="start">
-     <ion-button routerLink="/signup" color="primary">
+     <ion-button routerLink="/login" color="primary">
        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
       </ion-button>
    </ion-buttons>
@@ -16,7 +16,7 @@
     <h1>Registrar</h1>
   </div>
   <div class="form">
-    <h2 class="ion-text-center">{{'Ingresa su correo, su contraseña y su documento de identidad'}}</h2>
+    <!-- <h2 class="ion-text-center">{{'Ingresa su correo, su contraseña y su documento de identidad'}}</h2> -->
     <ion-list lines="none">
       <form [formGroup]=credentialFormSignUp>
         <ion-item lines="none" class="ion-margin-bottom" color="ion-color-secondary-rgb">
@@ -44,9 +44,9 @@
               required>
             </ion-input>
           </div>
-          <button  item-end class="btn_eye_icon"  (click)="togglePasswordMode(1)">
+          <button  item-end class="eye-icon-button"  (click)="togglePasswordMode(1)">
             <div>
-              <ion-icon  [name]="(passwordTypeInput_1 === 'text')?'eye':'eye-off'"></ion-icon>
+              <ion-icon class="eye-icon"  [name]="(passwordTypeInput_1 === 'text')?'eye':'eye-off'"></ion-icon>
             </div>
           </button>
         </ion-item>
@@ -65,9 +65,9 @@
               required>
             </ion-input>
           </div>
-          <button  item-end class="btn_eye_icon"  (click)="togglePasswordMode(2)">
+          <button  item-end class="eye-icon-button"  (click)="togglePasswordMode(2)">
             <div>
-              <ion-icon  [name]="(passwordTypeInput_2 === 'text')?'eye':'eye-off'"></ion-icon>
+              <ion-icon class="eye-icon"  [name]="(passwordTypeInput_2 === 'text')?'eye':'eye-off'"></ion-icon>
             </div>
           </button>
         </ion-item>
