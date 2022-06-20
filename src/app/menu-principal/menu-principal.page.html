@@ -8,8 +8,8 @@
 
   <div class="user-div">
       <div class="first-div" slot="end" >
-        <ion-label class="welcome">Bienvenid@</ion-label>
-        <ion-label class="name">Santiago</ion-label>
+        <ion-label class="welcome"></ion-label>
+        <ion-label class="name"></ion-label>
       </div>
       <img src="assets/img/icono-travel.png">
   </div>
@@ -19,12 +19,28 @@
 
     <ion-grid fixed>
       <ion-row>
-        <ion-col size="6" (click)="goToSubject(item)" *ngFor="let item of (subjects )">
-          <div class="col-div">
-            <img src="{{item.icon}}" >
-            <ion-label>{{item.name}}</ion-label>
+
+        <ion-col  size="12" (click)="goToSubject(subjects1)" >
+          <div  class="col-div" *ngIf="subjects1.name === 'Servicio de taxis'">
+            <img src="{{subjects1.icon}}" >
+            <ion-label>{{subjects1.name}}</ion-label>
           </div>
         </ion-col>
+
+        <ion-col size="6" (click)="goToSubject(subjects2)">
+          <div  class="col-div" *ngIf="subjects2.name !== 'Servicio de taxis'">
+            <img src="{{subjects2.icon}}" >
+            <ion-label>{{subjects2.name}}</ion-label>
+          </div>
+        </ion-col>
+
+        <ion-col size="6" (click)="goToSubject(subjects3)">
+          <div  class="col-div" *ngIf="subjects3.name !== 'Servicio de taxis'">
+            <img src="{{subjects3.icon}}" >
+            <ion-label>{{subjects3.name}}</ion-label>
+          </div>
+        </ion-col>
+
       </ion-row>
     </ion-grid>
   </div>

@@ -19,6 +19,7 @@ ion-content{
             margin-top:5%;
             width: 130px;
             height: 130px;
+            // background-color: inherit;
         }
     }
     #form{
@@ -26,21 +27,27 @@ ion-content{
         padding-left: 20px;
         padding-right: 20px;
 
-        ion-label{
-            font-size: 20px;
-        }
-        ion-icon{
-            width: 36px;
-            height: 36px;
-        }
-        #pencil{
-            width: 22px;
-            height: 22px;      
-        }
-        h2{
-            font-size: 20px;
-            font-weight: 700;
-        }
+        // ion-list{
+            // background-color: #ffffff;
+
+
+            ion-label{
+                font-size: 20px;
+            }
+            ion-icon{
+                width: 36px;
+                height: 36px;
+            }
+            #pencil{
+                width: 22px;
+                height: 22px;      
+            }
+            h2{
+                font-size: 20px;
+                font-weight: 700;
+            }
+        // }
+
     }
     ion-button{
         position: relative;
@@ -49,11 +56,53 @@ ion-content{
         font-weight: 500;
     }
     ion-input{
-        margin: top 5px;
+        // margin: top 5px;
         padding-left: 20px;
         padding-right: 20px;
     }
     app-button{
         margin-top: 20px;
     }
+}
+
+ion-list{
+    background-color: #ffffff;
+    ion-item{
+        border-radius: 130px;
+        background-color: #B3B6B7;
+        margin:10px 20px 10px 20px;
+    }
+}
+
+.eye-icon{
+    background-color: inherit;
+    width: 25px;
+    height: 25px;
+}
+
+.eye-icon-button{
+    background-color: inherit;
+}
+
+// .login-button{
+//     // margin-top: 25px;
+//     // margin:0px 20px 0px 20px !important;
+
+// }
+
+.span-style{
+    background-color: #B3B6B7;
+
+}
+
+.errors {
+    margin:0px 20px 0px 20px;
+    margin-bottom: 10px;
+    border-radius: 18px;
+    font-size: small;
+    color: #fff;
+    background: var(--ion-color-danger);
+    padding-left: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
