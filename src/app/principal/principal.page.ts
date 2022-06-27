@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, ElementRef, Inject, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Inject, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 // import { Plugins } from '@capacitor/core';
 import { Geolocation } from '@capacitor/geolocation';
 import { GoogleMapsService } from '../service/google-maps.service';
@@ -10,9 +10,11 @@ import { FirebaseApiService } from '../service/firebase-api.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { SesionService } from '../service/sesion.service';
+import * as EventEmitter from 'events';
 // const {Geolocation} = Plugins;
 // declare var google: any;
 // import { doc, onSnapshot } from "firebase/firestore";
+import { getStorage } from '@angular/fire/storage';
 // import { User } from '../aInterfaces/fire-base-interface';
 // import { doc, onSnapshot } from "firebase/firestore";
 declare var google;
@@ -29,9 +31,11 @@ interface Marker {
   selector: 'app-principal',
   templateUrl: './principal.page.html',
   styleUrls: ['./principal.page.scss'],
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PrincipalPage implements OnInit {
-  
+  // @Output('userChange')
+  // userEmitter = new EventEmitter;
   // array de markers
   markers: Marker[] = [
     {
@@ -60,47 +64,69 @@ export class PrincipalPage implements OnInit {
 
   map: any;
   marker: any;
+  datamovement: any;
   infowindow: any;
   positionSet: any;
   userData: any;
+  userDataDelivery:any;
+  userUid:any;
   positionSetString:String = "ESTA ES LA DIRECCION";
-  userDataDelivery: Observable<any>;
   isDeliveryDataLoad:Boolean = false;
   // public search:string='';
   @ViewChild('map') divMap: ElementRef;
 
   constructor(private renderer:Renderer2,
-    private googlemapsService: GoogleMapsService,
-    private alertController : AlertController,
-    private utilities : UtilitiesService,
-    private loandingCtrl: LoadingController,
-    private router: Router,
-    private firebaseApi:FirebaseApiService,
-    private firestore: AngularFirestore,
-    private sesion: SesionService,
-    @Inject(DOCUMENT) private document)
-{
-  // let result = async () => await this.userData
-  // console.log('result',result);
-}
+              private googlemapsService: GoogleMapsService,
+              private alertController : AlertController,
+              private utilities : UtilitiesService,
+              private loandingCtrl: LoadingController,
+              private router: Router,
+              private firebaseApi:FirebaseApiService,
+              private firestore: AngularFirestore,
+              private sesion: SesionService,
+              @Inject(DOCUMENT) private document
+            ){}
 
 ngOnInit(): void {
   this.getUserData();
   this.init();
   this.myLocation();
   Geolocation.requestPermissions();
+  this.getObservable()
 }
 
 ionViewWillEnter(){
-  this.sesion.sesionCaller()
+  // this.sesion.sesionCaller()
   this.getUserData();
-  // console.log('this.userData',this.userData.uid);
-  this.userDataDelivery =  this.firestore.collection('movement',ref => ref.where('uiserId', '==', this.userData.uid)).valueChanges();
+  this.getObservable()
 }
 
 async getUserData(){
   let result = await this.utilities.getDataUser();
   this.userData = result
+  this.getUidUser()
+}
+async getUidUser(){
+  this.userUid = this.utilities.getIdUser()
+}
+
+async getObservable(){
+  console.log('this.userUid',this.userUid);
+  if ('92FaFKAPwJc2S1DzHmTPqadITrB3' === this.userUid) {
+    console.log('true');
+  }
+try {
+   this.firestore.collection('movement').doc('92FaFKAPwJc2S1DzHmTPqadITrB3').valueChanges().subscribe(async res => {
+    if (res['isPending'] && !res['isTaken'] ) {
+      console.log('res_____________________________________',res);
+      this.userDataDelivery = await res
+      console.log('this.userDataDelivery___________________',this.userDataDelivery);
+    }
+   })
+  
+} catch (error) {
+  console.log('error',error);
+}
 }
 
 async init() {
@@ -226,37 +252,20 @@ async presentLoading() {
     message: 'Realizando pedido...',
     // duration: 5000
   });
+
+  try {
+    console.log('this.userDataDelivery.',this.userDataDelivery);
+  } catch (error) {
+    console.log('error',error);
+  }
   await loading.present();
   await this.generateTaxiDelivery();
-  // console.log('userData',this.userData);
-  // this.userDataDelivery = await this.firestore.collection('movement',ref => ref.where('isTaken', '==', true)).valueChanges();
-  // try {
-  //   this.userDataDelivery.forEach(element => {
-  //     console.log('element',element);
-  //   });
-  // } catch (error) {
-  //   console.log('error',error);
-  // }
-  // console.log('this.userDataDelivery',this.userDataDelivery);
-  // console.log('this.userDataDelivery',this.userDataDelivery);
-  // this.router.navigateByUrl('/data-driver', {replaceUrl: true});
-  // this.comments$ = afs.collectionGroup('Comments', ref => ref.where('user', '==', userId))
-  // .valueChanges({ idField: 'docId' });
   this.isDeliveryDataLoad = true;
   await loading.dismiss();
-}
-
-async onChangeUser(user){
-  console.log('onChange');
-  console.log('user',await user);
-
-  // console.log('data',await data);
 }
 
 async generateTaxiDelivery(){
   return await this.firebaseApi.taxiDelivery(this.userData,this.positionSet,this.positionSetString);
 }
 
-
 }
-

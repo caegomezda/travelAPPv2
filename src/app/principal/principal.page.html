@@ -1,60 +1,44 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons color="primary" slot="start">
-      <ion-menu-button menu="main-menu">
-        <!-- <app-menu></app-menu> -->
-      </ion-menu-button>
-    </ion-buttons>
+<ion-header class="ion-no-border">
+  <ion-toolbar class="ion-no-border">
+   <ion-buttons slot="start">
+      <ion-button routerLink="/menu-principañ" color="primary">
+       <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+   </ion-buttons>
+   <ion-buttons slot="end">
+     <!-- <ion-button class="regular" routerLink="/signup">Registrar</ion-button> -->
+   </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div>
+  <!-- <div>
     <ion-list *ngIf="isDeliveryDataLoad">
-      <ion-item *ngFor="let user of userDataDelivery | async" (globalZoneAwareCallback)="onChangeUser(user)">
-        <!-- <ion-icon slot="start" name="person-circle-outline"></ion-icon> -->
-        <ion-label  class="ion-text-wrap"><h2>{{user.positionSet}}</h2></ion-label>
-        <ion-label  class="ion-text-wrap"><h2>{{user.isTaken}}</h2></ion-label>
+      <ion-item *ngFor="let movement of userDataDelivery | async">
+        <ion-label (onchange)="onChangeUser(movement)"  class="ion-text-wrap"><h2>{{movement.positionSet}}</h2></ion-label>
+        <ion-label  class="ion-text-wrap"><h2>{{movement.isTaken}}</h2></ion-label>
       </ion-item>
     </ion-list>
-  </div>
-  <!-- <div #map class="map">
-      
+  </div> -->
+  <div #map class="map">
   </div> 
 
+  <form id="form">
+    <h3 class="regular">Dirección</h3>
+    <app-input placeholder="Ingresa dirección"></app-input>
+  </form>
   <div class="container">
-
-    
-    <ion-button id="miubicacion" class="regular" expand="block" shape="round" fill="outline" (click)="myLocation()" >Mi ubicación actual
-      <ion-icon class="icono" name="locate"></ion-icon>
-    </ion-button> -->
-
- 
-
+    <ion-button id="miubicacion" class="regular" expand="block" shape="round" fill="outline" (click)="myLocation()" >
+      Mi ubicación actual
+    <ion-icon class="icono" name="locate"></ion-icon>
+    </ion-button>
     <app-button  (click)="aceptar()" texto="Realizar pedido" class="aceptar"></app-button>
-    
-  <!-- </div> -->
-
+  </div>
   
 </ion-content>
 
-<!-- <div id="map">
+<!-- <div id="map"> -->
   
-</div>
+<!-- </div> -->
 
-<form id="form">
-    <h3 class="regular">Dirección</h3>
-    <app-input placeholder="Ingresa dirección"></app-input>
-    <h3 class="regular">Destino(Opcional)</h3>
-    <app-input placeholder="Ingresa la dirección de destino"></app-input>
-    <app-button texto="Solicitar taxi"></app-button>
-  </form> -->
 
-  <!-- <ion-item  class="ion-margin-bottom" lines="none">
-    <ion-label position="floating">Dirección</ion-label>
-    <ion-input color="ion-color-secondary-rgb"></ion-input>
-  </ion-item>
-  <ion-item color="ion-color-secondary-rgb" class="ion-margin-bottom" lines="none">
-    <ion-label position="floating">Ingresa el destino(Opcional)</ion-label>
-    <ion-input></ion-input>
-  </ion-item> -->

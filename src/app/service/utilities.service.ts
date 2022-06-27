@@ -14,6 +14,7 @@ export class UtilitiesService {
   dataUser:any;
   userCredential:any;
   dataDelivery:any;
+  uidUser:any;
 
   d = new Date();
   private userURL = environment.urlConfing.USERURL;
@@ -43,6 +44,7 @@ export class UtilitiesService {
   saveIdUser(id){
     this.idUser = id;
   }
+  
   //Obtiene la id del usuario activo
   getIdUser(){
     return this.idUser;
@@ -60,8 +62,14 @@ export class UtilitiesService {
     return await this.dataUser;
   }
 
+  async getUidUser(){
+    return await this.uidUser;
+  }
+
   async saveDataUser(data){
     this.dataUser = await data;
+    console.log('data.uid',data.uid);
+    this.uidUser = await data.uid;
   }
 
   async getDataDelivery(){

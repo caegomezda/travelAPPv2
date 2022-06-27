@@ -28,7 +28,7 @@ export class FirebaseApiService {
     console.log('accessToken',accessToken);
     apiUrl = `${url}/${uid}.json?auth=${accessToken}`;
     if (urlType === 3) {
-      console.log('url',url);
+      // console.log('url',url);
       apiUrl = `${url}/movements.json?auth=${accessToken}`;
     }
     if(urlType === 5){
@@ -52,9 +52,9 @@ export class FirebaseApiService {
     //   uid:credential.user.uid,
     //   token:await credential.user._delegate.accessToken
     // }
-    console.log('credential',credential);
-    console.log('newForm',newForm);
-    console.log('urlType',urlType);
+    // console.log('credential',credential);
+    // console.log('newForm',newForm);
+    // console.log('urlType',urlType);
     await this.AddInstance(credential,newForm,urlType);
   }
 
@@ -146,7 +146,6 @@ export class FirebaseApiService {
       positionSet:positionSet,
       positionSetString:positionSetString
     }
-    // console.log('newForm',newForm);
     return await this.afs.doc(
       `movement/${credential['uid']}`
       ).set({
