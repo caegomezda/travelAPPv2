@@ -6,39 +6,50 @@
       </ion-button>
    </ion-buttons>
    <ion-buttons slot="end">
-     <!-- <ion-button class="regular" routerLink="/signup">Registrar</ion-button> -->
    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
-  <!-- <div>
-    <ion-list *ngIf="isDeliveryDataLoad">
-      <ion-item *ngFor="let movement of userDataDelivery | async">
-        <ion-label (onchange)="onChangeUser(movement)"  class="ion-text-wrap"><h2>{{movement.positionSet}}</h2></ion-label>
-        <ion-label  class="ion-text-wrap"><h2>{{movement.isTaken}}</h2></ion-label>
-      </ion-item>
-    </ion-list>
-  </div> -->
   <div #map class="map">
   </div> 
 
-  <form id="form">
-    <h3 class="regular">Dirección</h3>
-    <app-input placeholder="Ingresa dirección"></app-input>
-  </form>
-  <div class="container">
-    <ion-button id="miubicacion" class="regular" expand="block" shape="round" fill="outline" (click)="myLocation()" >
-      Mi ubicación actual
-    <ion-icon class="icono" name="locate"></ion-icon>
-    </ion-button>
-    <app-button  (click)="aceptar()" texto="Realizar pedido" class="aceptar"></app-button>
-  </div>
+
   
 </ion-content>
-
-<!-- <div id="map"> -->
+<div>
+  <!-- <app-input placeholder="Ingresa dirección"></app-input> -->
+  <input placeholder="Ingresa dirección" type="text">
+  <div class="div-style">
+    <!-- <ion-button id="miubicacion" class="regular" expand="block"  fill="outline" (click)="myLocation()" >
+    <ion-icon class="icono" name="locate"></ion-icon>
+    </ion-button>
+    <app-button  (click)="aceptar()" texto="Solicitar" class="aceptar"></app-button> -->
+    <div>
+      <ion-icon class="icono" name="locate"></ion-icon>
+    </div>
+    <div>
+      <label>Solicitar</label>
+    </div>
+  </div>
+</div>
+<!-- <div #map class="map">
+</div>  -->
+<!-- <div id="map">
   
-<!-- </div> -->
+</div> -->
+
+<!-- <form id="form">
+  <h3 class="regular">Dirección</h3>
+  <app-input placeholder="Ingresa dirección"></app-input>
+  <app-button  (click)="aceptar()" texto="Realizar pedido" class="aceptar"></app-button>
+</form>
+<div class="container">
+  <ion-button id="miubicacion" class="regular" expand="block" shape="round" fill="outline" (click)="myLocation()" >
+    Mi ubicación actual
+  <ion-icon class="icono" name="locate"></ion-icon>
+  </ion-button>
+</div> -->
 
 
