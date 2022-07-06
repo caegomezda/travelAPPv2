@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "travelApp",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

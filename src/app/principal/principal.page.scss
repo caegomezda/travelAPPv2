@@ -2,7 +2,7 @@
     font-family:'Poppins', sans-serif;
 }
 ion-toolbar{
-    --background: #fd502db9;
+    --background: #fd6242;
 }
 
 ion-content{
@@ -36,7 +36,7 @@ ion-content{
             height:44px;
             box-shadow: 1px 8px 8px 0px rgba(0,0,0,0.08);
             --highlight-height: 0px;
-            background-color: rgba(253, 81, 45, 0.38);
+            background-color: #fd6242;
             
             font-size:18px;
             // --padding-top:14px;
@@ -110,4 +110,78 @@ ion-content{
 .div-style{
     display: flex;
     justify-content: center;
+}
+
+
+.card-container{
+    margin-top: 50%;
+    // margin-bottom: 25%;
+    display: flex;
+    height: 30%;
+    justify-content: center;
+    align-items: center;
+    background-color: #fc8168;
+    color: white;
+    font-size: 30px;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.input-container{
+    width: 100%;
+}
+
+.input-class{
+    width: 100%;
+    text-align:center;
+    height: 80px;
+    background-color: #fc8168;
+    border: 2px white solid;
+}
+
+.icon-container{
+    text-align:center;
+    width: 50%;
+    height: 65px;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    background-color: #fd6242;
+    border: 2px white solid;
+}
+
+.label-container{
+    text-align:center;
+    width: 50%;
+    height: 65px;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    background-color: #fd6242;
+    border: 2px white solid;
+
+}
+
+input::placeholder {
+    color: rgba(255, 255, 255, 0.74);
+  }
+
+.button-container{
+    width: 100%;
+}
+
+.button-style{
+    border-radius: 0px !important;
+}
+
+.button-native{
+    border-radius: 0px !important;
+
+}
+.div-container-loading{
+    padding-top: 100px;
 }

@@ -68,7 +68,6 @@ export class UtilitiesService {
 
   async saveDataUser(data){
     this.dataUser = await data;
-    console.log('data.uid',data.uid);
     this.uidUser = await data.uid;
   }
 

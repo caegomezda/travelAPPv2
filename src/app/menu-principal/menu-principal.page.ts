@@ -31,7 +31,7 @@ subjects3={
     ) { }
 
   ionViewWillEnter(){
-    this.sesion.sesionCaller()
+    // this.sesion.sesionCaller()
   }
   
   ngOnInit() {

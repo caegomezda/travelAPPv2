@@ -136,16 +136,20 @@ export class FirebaseApiService {
       uid:userData['uid'],
       token:await this.utilities.getToken()
     }
-    let newForm = {
-      creationDate:creationTime[1],
-      uiserId:credential['uid'],
-      isActive:true,
-      isPending:true,
-      istaken:false,
-      isDone:false,
-      positionSet:positionSet,
-      positionSetString:positionSetString
-    }
+    // let isPending = boleanValues['isPending']
+    // let isTaken = boleanValues['isTaken']
+    // console.log('isPending',isPending);
+    // console.log('isTaken',isTaken);
+    // let newForm = {
+    //   creationDate:creationTime[1],
+    //   uiserId:credential['uid'],
+    //   isActive:true,
+    //   isPending:true,
+    //   istaken:false,
+    //   isDone:false,
+    //   positionSet:positionSet,
+    //   positionSetString:positionSetString
+    // }
     return await this.afs.doc(
       `movement/${credential['uid']}`
       ).set({
@@ -153,11 +157,13 @@ export class FirebaseApiService {
         uiserId:credential['uid'],
         isActive:true,
         isPending:true,
-        istaken:false,
+        isTaken:false,
         isDone:false,
         // positionSet:positionSet,
         positionSet:"camilo estuvo aquii",
-        positionSetString:positionSetString
+        positionSetString:positionSetString,
+        driverName:"",
+        driverId:"",
       });
   }
 

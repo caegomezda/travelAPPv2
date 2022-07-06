@@ -10,13 +10,7 @@ import { FirebaseApiService } from '../service/firebase-api.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { SesionService } from '../service/sesion.service';
-import * as EventEmitter from 'events';
-// const {Geolocation} = Plugins;
-// declare var google: any;
-// import { doc, onSnapshot } from "firebase/firestore";
 import { getStorage } from '@angular/fire/storage';
-// import { User } from '../aInterfaces/fire-base-interface';
-// import { doc, onSnapshot } from "firebase/firestore";
 declare var google;
 
 // interface para los marcadores externos
@@ -72,6 +66,9 @@ export class PrincipalPage implements OnInit {
   userUid:any;
   positionSetString:String = "ESTA ES LA DIRECCION";
   isDeliveryDataLoad:Boolean = false;
+  isAcepted:Boolean = false;
+  isClicked:Boolean = false;
+  // boleanForm:any
   // public search:string='';
   @ViewChild('map') divMap: ElementRef;
 
@@ -89,6 +86,8 @@ export class PrincipalPage implements OnInit {
 
 ngOnInit(): void {
   this.getUserData();
+  this.getUidUser();
+  this.getObservableVerified()
   this.init();
   this.myLocation();
   Geolocation.requestPermissions();
@@ -96,37 +95,48 @@ ngOnInit(): void {
 }
 
 ionViewWillEnter(){
-  // this.sesion.sesionCaller()
+  this.sesion.sesionCaller();
   this.getUserData();
-  this.getObservable()
+  this.getUidUser();
+  this.getObservableVerified();
+  this.getObservable();
+  console.log('this.isAcepted',this.isAcepted);
+  console.log('this.isClicked',this.isClicked);
+  console.log('this.isDeliveryDataLoad',this.isDeliveryDataLoad);
 }
 
 async getUserData(){
-  let result = await this.utilities.getDataUser();
-  this.userData = result
-  this.getUidUser()
+  this.userData = await this.utilities.getDataUser();
 }
 async getUidUser(){
-  this.userUid = this.utilities.getIdUser()
+  this.userUid = await this.utilities.getIdUser();
+}
+
+async getObservableVerified(){
+  if (this.userUid === undefined) {
+    this.userUid = await this.utilities.getIdUser()
+  }
 }
 
 async getObservable(){
-  console.log('this.userUid',this.userUid);
-  if ('92FaFKAPwJc2S1DzHmTPqadITrB3' === this.userUid) {
-    console.log('true');
+  await this.getUserData();
+  await this.getUidUser();
+  await this.getObservableVerified();
+  try {
+    this.firestore.collection('movement').doc(this.userUid).valueChanges().subscribe(async res => {
+      this.userDataDelivery = await res;
+      try {
+        if (!res['isPending'] && res['isTaken']) {
+          console.log('this.isDeliveryDataLoad',this.isDeliveryDataLoad);
+          this.isDeliveryDataLoad = true;
+        }
+      } catch (error) {
+        console.log('error',error);
+      }
+    })
+  } catch (error) {
+    console.log('error',error);
   }
-try {
-   this.firestore.collection('movement').doc('92FaFKAPwJc2S1DzHmTPqadITrB3').valueChanges().subscribe(async res => {
-    if (res['isPending'] && !res['isTaken'] ) {
-      console.log('res_____________________________________',res);
-      this.userDataDelivery = await res
-      console.log('this.userDataDelivery___________________',this.userDataDelivery);
-    }
-   })
-  
-} catch (error) {
-  console.log('error',error);
-}
 }
 
 async init() {
@@ -236,9 +246,14 @@ async presentAlertConfirm() {
         id: 'cancel-button',
       }, {
         text: 'Aceptar',
+        // handler: async () => {
+        //     this.isClicked = true
+        //     await this.presentLoading();
+        //   }
         handler: async () => {
-            await this.presentLoading();
-          }
+          this.isClicked = true
+          await this.presentDelivery();
+        }
       }
     ]
   });
@@ -252,20 +267,33 @@ async presentLoading() {
     message: 'Realizando pedido...',
     // duration: 5000
   });
-
-  try {
-    console.log('this.userDataDelivery.',this.userDataDelivery);
-  } catch (error) {
-    console.log('error',error);
-  }
-  await loading.present();
-  await this.generateTaxiDelivery();
-  this.isDeliveryDataLoad = true;
-  await loading.dismiss();
+    await loading.present();
+    await this.generateTaxiDelivery();
+    await loading.dismiss();
 }
 
 async generateTaxiDelivery(){
-  return await this.firebaseApi.taxiDelivery(this.userData,this.positionSet,this.positionSetString);
+  await this.firebaseApi.taxiDelivery(this.userData,this.positionSet,this.positionSetString);
+  // await this.presentDelivery();
+}
+
+async presentDelivery() {
+  await this.generateTaxiDelivery();
+  // console.log('this.userDataDelivery.__________________________________',this.userDataDelivery);
+  console.log('this.isClicked',this.isClicked);
+  console.log('this.isAcepted',this.isAcepted);
+  console.log('this.isDeliveryDataLoad',this.isDeliveryDataLoad);
+  this.isAcepted = true
+}
+
+async cancelarPedido(){
+  this.isAcepted = false
+  // this.boleanForm={
+  //   isPending:true,
+  //   isTaken:false
+  // }
+  await this.firebaseApi.taxiDelivery(this.userData,this.positionSet,this.positionSetString);
+
 }
 
 }
