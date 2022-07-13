@@ -40,15 +40,12 @@
 
   <ion-content *ngIf="!isDeliveryDataLoad && isClicked">
     <!-- <div *ngIf="!isDeliveryDataLoad && isClicked"> -->
-      <ion-card class="card-container">
-            
+      <ion-card class="card-container">   
               <div class="div-container-loading">
                 <div>
                   <label>Esperando ...</label>
                 </div>
               </div>
-
-
               <div class="button-container">
                 <ion-button (click)="cancelarPedido()" slot="end" class="button-style"  expand="full"  shape="round">
                   Cancelar
@@ -75,6 +72,24 @@
               </div>
       </ion-card>
   </ion-content>
+
+  <div class="div-container" *ngIf="isDeliveryDataLoad && isClicked">
+    <div class="inpu-container">
+      <input class="input-class" placeholder="Ingresa dirección" type="text">
+    </div>
+  
+    <div class="div-style">
+  
+      <div class="icon-container">
+        <ion-icon class="icono" name="locate"></ion-icon>
+      </div>
+  
+      <div class="label-container">
+        <label>Solicitar</label>
+      </div>
+  
+    </div>
+  </div>
 
 <!-- <div #map class="map">
 </div>  -->

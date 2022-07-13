@@ -95,7 +95,7 @@ ngOnInit(): void {
 }
 
 ionViewWillEnter(){
-  this.sesion.sesionCaller();
+  // this.sesion.sesionCaller();
   this.getUserData();
   this.getUidUser();
   this.getObservableVerified();
@@ -287,12 +287,13 @@ async presentDelivery() {
 }
 
 async cancelarPedido(){
+  console.log('Cancelar Pedido');
   this.isAcepted = false
   // this.boleanForm={
   //   isPending:true,
   //   isTaken:false
   // }
-  await this.firebaseApi.taxiDelivery(this.userData,this.positionSet,this.positionSetString);
+  // await this.firebaseApi.taxiDelivery(this.userData,this.positionSet,this.positionSetString);
 
 }
 

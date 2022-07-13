@@ -43,7 +43,7 @@ constructor(private renderer: Renderer2,
 }
 
 ionViewWillEnter(){
-  this.sesion.sesionCaller()
+  // this.sesion.sesionCaller()
 }
 
 ngOnInit(): void {
