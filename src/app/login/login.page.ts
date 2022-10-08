@@ -21,6 +21,7 @@ export class LoginPage implements OnInit {
   credentialForm:FormGroup;
   verificaionFirebase:any;
   passwordTypeInput_1  =  'password';
+  image_backg: string;
 
   constructor(private fb:FormBuilder,
               private alertController: AlertController,
@@ -59,7 +60,7 @@ export class LoginPage implements OnInit {
       // const loading = await this.loadingController.create();
       await loading.present();
       this.firebaseAuth.signIn(newCredencialValue.value).then( async res =>{
-        if(this.firebaseAuth.isEmailVerified){      
+        if(this.firebaseAuth.isEmailVerified){
           this.utilities.saveUsu(emailUsu);
           await this.utilities.saveIdUser(res.user.uid);
           await this.utilities.saveTokenUser(res.user.getIdToken());
@@ -190,6 +191,7 @@ export class LoginPage implements OnInit {
       console.log("err",err)
       await alert.present();
     })
+    this.image_backg = '../../assets/imgs/imglogin.jpg'
   }
 }
 

@@ -173,13 +173,17 @@ ion-toolbar{
     --background: #ffffff;
 }
 ion-content{
-    --background: #ffffff;
+    --background: url(../../assets/img/imglogin.jpg)0 0/100% 100% no-repeat;
+
+    #txt-registrar{
+        color: #fe5143;
+    }
 
     #header{
         display:flex;
         flex-direction: column;
         align-items: center;
-        
+
         img {
             width: 340px;
             height: 118px;
@@ -240,24 +244,26 @@ ion-content{
 }
 
 ion-list{
-    background-color: #ffffff;
+    background-color: #ffffff00;
     ion-item{
         border-radius: 130px;
         // background-color: #B3B6B7;
-        background-color: rgba(253, 81, 45, 0.38);
+        //background-color: rgba(253, 81, 45, 0.38);
 
         margin:10px 20px 10px 20px;
     }
 }
 
 .eye-icon{
-    background-color: inherit;
+    background-color: #0000;
+    color: #0000;
     width: 25px;
     height: 25px;
 }
 
 .eye-icon-button{
-    background-color: inherit;
+    background-color: #0000;
+    color: #0000;
 }
 
 // .login-button{
@@ -276,8 +282,8 @@ ion-list{
     margin-bottom: 10px;
     border-radius: 18px;
     font-size: small;
-    color: #fff;
-    background: var(--ion-color-danger);
+    color: rgb(255, 0, 0);
+    background: #ffffff00;
     padding-left: 15px;
     padding-top: 5px;
     padding-bottom: 5px;

@@ -10,18 +10,23 @@ import { UtilitiesService } from '../service/utilities.service';
 })
 export class MenuPrincipalPage implements OnInit {
 subjects1={
-  icon: 'assets/icon/car-sport-outline.svg',
+  icon: 'assets/icon/taxi.svg',
   name: 'Servicio de taxis',
   id: '/principal'
 }
 subjects2={
-  icon: 'assets/icon/navigate-outline.svg',
-  name: 'Intermunicipal',
+  icon: 'assets/icon/bus.svg',
+  name: 'Buseta',
   id: '/intermunicipal'
 }
 subjects3={
-  icon: 'assets/icon/help-outline.svg',
-  name: 'Contáctanos',
+  icon: 'assets/icon/ajustes.svg',
+  name: 'Soporte',
+  id: '/contact'
+}
+subjects4={
+  icon: 'assets/icon/persona.svg',
+  name: 'Perfil',
   id: '/contact'
 }
   constructor(

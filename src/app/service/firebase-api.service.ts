@@ -68,12 +68,15 @@ export class FirebaseApiService {
 
   async getAccountData(){
     let credential = await this.getCredential()
+    console.log('credenciales', credential);
     let params = {}
     let result  = await this.fetchUserInfo2Api(credential,1,params);
+    console.log('result',result);
     if(result === null){
       result  = await this.fetchUserInfo2Api(credential,2,params);
     }
     let data = await this.getData(result,1);
+    console.log('data',data);
     return data
   }
 
@@ -106,12 +109,15 @@ export class FirebaseApiService {
     let uid = credential["uid"];
     let accessToken = credential["token"];
     let apiUrl = `${url}/${uid}.json?auth=${accessToken}`;
+    console.log(apiUrl);
     if (urlType === 4) {
         apiUrl = `${url}/movements.json?orderBy="${params['orderBy']}"&equalTo=${params['equalTo']}&auth=${accessToken}`;
     }
     let json = {}
     json = JSON.stringify(json);
-    return  this.http.get(`${apiUrl}`, json).pipe(map( data => data)).toPromise();
+    console.log('Antes');
+    return await this.http.get(`${apiUrl}`, json).pipe(map( data => data)).toPromise();
+    console.log('despues');
   }
 
   async getData(dataJson,type){

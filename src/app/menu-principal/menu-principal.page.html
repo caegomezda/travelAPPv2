@@ -4,24 +4,33 @@
 <div class="main-container-div">
   <!-- <ion-button slot="start" class="menu-btn"> -->
     <!-- <ion-menu-button color="ligth"></ion-menu-button> -->
-    <ion-icon routerLink="/login" class="menu-btn" name="exit-outline"></ion-icon>
+    <!-- <ion-icon routerLink="/login" class="menu-btn" name="exit-outline"></ion-icon> -->
   <!-- </ion-button> -->
 
-  <div class="user-div">
+  <!-- <div class="user-div">
       <div class="first-div" slot="end" >
         <ion-label class="welcome"></ion-label>
         <ion-label class="name"></ion-label>
       </div>
-      <img src="assets/img/icono-travel.png">
+  </div> -->
+  <div class="bienvenidotxt container">
+    <ion-label class="bienvenidotxt">Bienvenid@ Daniel Castro</ion-label>
   </div>
 
-  <div class="content-div animated bounceInUp" >
-    <ion-label class="hello">Hola,Selecciona un servicio </ion-label>
 
+  <div class="img-travelapp">
+    <img src="assets/img/fondoverdetravel.png">
+  </div>
+
+  <div class="center welcome1">
+    <h5>Hola, Selecciona un servicio.</h5>
+</div>
+
+  <div class="content-div animated bounceInUp" >
     <ion-grid fixed>
       <ion-row>
 
-        <ion-col  size="12" (click)="goToSubject(subjects1)" >
+        <ion-col  size="6" (click)="goToSubject(subjects1)" >
           <div  class="col-div" *ngIf="subjects1.name === 'Servicio de taxis'">
             <img src="{{subjects1.icon}}" >
             <ion-label>{{subjects1.name}}</ion-label>
@@ -38,6 +47,13 @@
         <ion-col size="6" (click)="goToSubject(subjects3)">
           <div  class="col-div" *ngIf="subjects3.name !== 'Servicio de taxis'">
             <img src="{{subjects3.icon}}" >
+            <ion-label>{{subjects3.name}}</ion-label>
+          </div>
+        </ion-col>
+
+        <ion-col size="6" (click)="goToSubject(subjects3)">
+          <div  class="col-div" *ngIf="subjects3.name !== 'Perfil'">
+            <img src="{{subjects4.icon}}" >
             <ion-label>{{subjects3.name}}</ion-label>
           </div>
         </ion-col>

@@ -6,9 +6,16 @@
           "travel-app-v2-1f864"
         ]
       }
+    },
+    "travelapp-802a7": {
+      "hosting": {
+        "app": [
+          "travelapp-802a7"
+        ]
+      }
     }
   },
   "projects": {
-    "default": "travel-app-v2-1f864"
+    "default": "travelapp-802a7"
   }
 }

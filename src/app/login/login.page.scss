@@ -2,7 +2,26 @@ ion-toolbar{
     --background: #ffffff;
 }
 ion-content{
-    --background: #ffffff;
+    --background: #ffff;
+
+    #header2{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        
+        img {
+            width: 100%;
+            height: 180px;
+            border: 0;
+            margin-top: 10%;
+        }
+        ion-icon{
+            margin-top:5%;
+            width: 130px;
+            height: 130px;
+            // background-color: inherit;
+        }
+    }
 
     #header{
         display:flex;
@@ -57,6 +76,7 @@ ion-content{
     }
     ion-input{
         // margin: top 5px;
+        background-color: #ffff;
         color: rgba(0, 0, 0, 0.60);
         padding-left: 20px;
         padding-right: 20px;
@@ -67,12 +87,12 @@ ion-content{
 }
 
 ion-list{
-    background-color: #ffffff;
+    background-color: #ffffff00;
+    //ESTE ES EL CSS PARA MODIFICAR EL FONDO DE LOS INPUTS DE INICIO DE SESION
     ion-item{
-        border-radius: 130px;
+        border-radius: 30px;
         // background-color: #B3B6B7;
-        background-color: rgba(253, 81, 45, 0.38);
-
+        //background-color: rgb(230, 24, 24);
         margin:10px 20px 10px 20px;
     }
 }
@@ -103,9 +123,24 @@ ion-list{
     margin-bottom: 10px;
     border-radius: 18px;
     font-size: small;
-    color: #fff;
-    background: var(--ion-color-danger);
+    color: rgb(243, 18, 18);
     padding-left: 15px;
     padding-top: 5px;
     padding-bottom: 5px;
+}
+
+.btn-sigIn{
+    background-color: #007376;
+    border: 100px;
+    height: 50px;
+    width: 250px;
+    border-radius: 10px;
+    size: 20px;
+    margin-top: 0%;
+    margin-left: 20%;
+    margin-right: 50%;
+
+}
+.eye-icon-button{
+    color: #0000;
 }

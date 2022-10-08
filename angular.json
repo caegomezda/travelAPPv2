@@ -152,8 +152,8 @@
             "prerender": false,
             "ssr": false,
             "browserTarget": "app:build:production",
-            "firebaseProject": "travel-app-v2-1f864",
-            "firebaseHostingSite": "travel-app-v2-1f864"
+            "firebaseProject": "travelapp-802a7",
+            "firebaseHostingSite": "travelapp-802a7"
           }
         }
       }
