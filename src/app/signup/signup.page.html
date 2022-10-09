@@ -1,19 +1,9 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar>
-   <ion-buttons slot="start">
-     <ion-button routerLink="/login" color="primary">
-       <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
-      </ion-button>
-   </ion-buttons>
-   <ion-buttons slot="end">
-     <ion-button routerLink="/login">Inicia sesión</ion-button>
-   </ion-buttons>
-  </ion-toolbar>
 </ion-header>
 <ion-content>
   <div id="header">
     <img src="assets/img/logotipo-travel.png" />
-    <h1 id="txt-registrar">Registrar</h1>
+    <h1 id="txt-registrar">Registrate</h1>
   </div>
   <div class="form">
     <!-- <h2 class="ion-text-center">{{'Ingresa su correo, su contraseña y su documento de identidad'}}</h2> -->
@@ -27,6 +17,7 @@
             autofocus="true"
             clearInput="true"
             required>
+            <ion-icon name="mail"></ion-icon>
           </ion-input>
         </ion-item>
         <div *ngIf="(email.dirty || email.touched) && email.errors" class="errors">
@@ -42,11 +33,12 @@
               formControlName="password"
               clearInput="true"
               required>
+              <ion-icon name="lock-closed"></ion-icon>
             </ion-input>
           </div>
           <button  item-end class="eye-icon-button"  (click)="togglePasswordMode(1)">
             <div>
-              <ion-icon class="eye-icon"  [name]="(passwordTypeInput_1 === 'text')?'eye':'eye-off'"></ion-icon>
+              <ion-icon color="" class="eye-icon"  [name]="(passwordTypeInput_1 === 'text')?'eye':'eye-off'"></ion-icon>
             </div>
           </button>
         </ion-item>
@@ -59,10 +51,11 @@
             <ion-input 
               [(ngModel)]="passwordForm.segundaClave" 
               [type]="passwordTypeInput_2" 
-              placeholder="{{'Contraseña'}}"
+              placeholder="{{'Repeitr contraseña'}}"
               formControlName="password2"
               clearInput="true"
               required>
+              <ion-icon name="locked-closed"></ion-icon>
             </ion-input>
           </div>
           <button  item-end class="eye-icon-button"  (click)="togglePasswordMode(2)">
@@ -76,7 +69,10 @@
           <span *ngIf="password2.errors?.minlength">La constraseña debe tener al menos 6 caracteres</span>
         </div>
         <app-button  (click)="signUp()" texto="Registrar"></app-button>
+        <br>
       </form>
+      <app-button  routerLink="/login" texto="Iniciar sesión"></app-button> br
+
     </ion-list>
   </div>
 </ion-content>

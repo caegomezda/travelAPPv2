@@ -2,7 +2,7 @@ ion-toolbar{
     --background: #ffffff;
 }
 ion-content{
-    --background: #ffffff;
+    --background: url(../../assets/img/Interfacesfondos-2.jpg)0 0/100% 100% no-repeat;
     #header{
         display:flex;
         flex-direction: column;
@@ -74,9 +74,9 @@ ion-content{
 ion-item{
     border-radius: 18px;
     height:44px;
-    box-shadow: 1px 8px 8px 0px rgba(0,0,0,0.08);
+
     --highlight-height: 0px;
-    background-color: rgba(253, 81, 45, 0.38);
+    background-color: #e1e2e6;
     
     ion-input{
         font-size:18px;
@@ -90,4 +90,67 @@ ion-item{
         text-decoration: none;
     }
     
+}
+
+.ion-text-area{
+    background-color:#e1e2e6 ;
+}
+
+.txt-contact{
+    color: #2f2e41;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.titulo{
+    color: #656566;
+    text-align: center;
+}
+
+.txt-soporte{
+    //color: #717173;
+    color: #707072;
+    font-size:20px;
+}
+
+.container-inputs-contact{
+    margin: 0 auto;
+    color:rgb(0, 0, 0);
+}
+
+
+.logotravelpng{
+    margin-bottom: 50px;
+    margin-top: 20px;
+    height: 300px;
+    width: 150px;
+    margin: 0 auto;
+}
+
+#txt-input-color{
+    color: rgb(0, 0, 0);
+}
+
+#btn-send-message{
+    background-color: #FD512D;
+}
+.btn-send-message{
+    padding: rgb(243, 123, 123);
+    color: #ffff;
+    border-radius: 20px;
+    margin: 0 auto;
+}
+
+.btn-send{
+    background-color: #fe5043;
+    border: 100px;
+    height: 50px;
+    width: 100%;
+    border-radius: 10px;
+    size: 20px;
+    margin: 0 auto;
+    margin-top:5px;
+    font-size: 17px;
+
 }

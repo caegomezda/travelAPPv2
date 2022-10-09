@@ -1,4 +1,4 @@
-<ion-header>
+<ion-content>
   <ion-toolbar>
     <ion-buttons slot="start" routerLink="/principal">
       <ion-button color="primary">
@@ -6,56 +6,64 @@
        </ion-button>
     </ion-buttons>
   </ion-toolbar>
-</ion-header>
-
-<ion-content>
   <div id="header">
     <img src="assets/img/logotipo-travel.png" />
   </div>
 
   <div id="contac">
-    <ion-row>
-      <ion-col size="8" offset="1">
-        <div>
-          <h1 class="titulo">Contactar<br> con soporte</h1>
-        </div>
-      </ion-col>
-      <ion-col size="2" >
-        <div>
-          <ion-icon name="umbrella-outline"></ion-icon>
-        </div>
-      </ion-col>
-    </ion-row>
-  </div>
-  <div class="form">
-    <div [formGroup]="credentialForm">
-      <ion-item color="ion-color-secondary-rgb" class="ion-margin-bottom" lines="none">
-        <ion-input 
-          type="text"
-          placeholder="{{'Titulo'}}"
-          formControlName="vrtitle"
-          autofocus="true"
-          clearInput="true"
-          required>
-        </ion-input>
-      </ion-item>
+        <ion-col size="12">
+          <h2 class="titulo">Contactar con soporte</h2>
+          <p class="txt-soporte">Si necesitas solicitar ayuda contáctanos al siguiente correo de soporte:</p>
+        </ion-col>
+        <ion-col size="2" >
+        </ion-col>
 
-      <ion-textarea  
-        formControlName="description" 
-        name="description" 
-        color="ion-color-secondary-rgb" 
-        class="ion-margin-bottom" 
-        class="ion-text-area" 
-        rows="6" 
-        cols="20" 
-        placeholder="  Descripcción..."
-        autofocus="true"
-        clearInput="true"
-        required></ion-textarea>
+  </div>
+
+  <ion-grid>
+    <ion-row col-12>
+      <div class="container-inputs-contact">
+        <div class="form">
+          <div [formGroup]="credentialForm">
+            <ion-item color="ion-color-secondary-contrast" class="ion-margin-bottom" lines="none">
+              <ion-input 
+                type="text"
+                placeholder="{{'Titulo'}}"
+                formControlName="vrtitle"
+                autofocus="true"
+                clearInput="true"
+                id="txt-input-color"
+                required>
+                <!-- <ion-icon name="lock-closed"></ion-icon> -->
+              </ion-input>
+            </ion-item>
       
-        <app-button  (click)="sendPQRS()" texto="Iniciar sesión"></app-button>
-    </div>
-
-  </div>
+            <ion-textarea  
+              formControlName="description" 
+              name="description" 
+              color="ion-color-secondary-contrast" 
+              class="ion-margin-bottom" 
+              class="ion-text-area" 
+              rows="6" 
+              cols="20" 
+              placeholder="  Descripción..."
+              autofocus="true"
+              clearInput="true"
+              id="textareacolor"
+              required>
+              <!-- <ion-icon style="zoom:0.5;" name="lock-closed"></ion-icon> -->
+            </ion-textarea>
+            
+              <!-- <app-button (click)="sendPQRS()" texto="Enviar mensaje"></app-button> -->
+              <button class="btn-send" (click)="sendPQRS()">Enviar mensaje</button>
+              <div class="logotravelpng">
+                <img src="assets/img/logotravel.png" alt="" srcset="">
+              </div>
+          </div>
+        </div>    
+      </div>
+    </ion-row> 
+  </ion-grid>
+    
 </ion-content>
 

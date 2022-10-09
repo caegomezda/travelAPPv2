@@ -14,9 +14,6 @@
     <ion-button class="regular" routerLink="/signup">Registrar</ion-button>
     </ion-buttons>
   </div>
-
-
-
   
   <div class="form">
     <ion-list lines="none">
@@ -29,6 +26,7 @@
             autofocus="true"
             clearInput="true"
             required>
+            <ion-icon name="mail"></ion-icon>
           </ion-input>
         </ion-item>
         <div *ngIf="(email.dirty || email.touched) && email.errors" class="errors">
@@ -44,6 +42,7 @@
               formControlName="password"
               clearInput="true"
               required>
+              <ion-icon name="lock-closed"></ion-icon>
             </ion-input>
           </div>
           <button  item-end class="eye-icon-button"  (click)="togglePasswordMode(1)">
